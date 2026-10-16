@@ -1,0 +1,184 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { getResult, quiz } from "@/data/quiz";
+import { CONNECT_URL, strategies } from "@/data/strategies";
+import styles from "./Quiz.module.scss";
+
+const NEXT_DELAY = 400;
+const SWAP_DELAY = 280;
+
+export default function Quiz() {
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [shownId, setShownId] = useState<string | null>(null);
+  const [leaving, setLeaving] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const step = answers.length;
+  const isDone = step === quiz.length;
+  const current = quiz[step];
+  const resultId = isDone ? (shownId ?? getResult(answers)) : null;
+  const result = resultId ? strategies.find((s) => s.id === resultId) : null;
+
+  useEffect(() => {
+    if (!isDone || !window.matchMedia("(max-width: 767px)").matches) return;
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [isDone]);
+
+  const choose = (index: number) => {
+    if (selected !== null) return;
+    setSelected(index);
+    window.setTimeout(() => {
+      setAnswers((prev) => [...prev, index]);
+      setSelected(null);
+    }, NEXT_DELAY);
+  };
+
+  const showNext = () => {
+    if (!result || leaving) return;
+    const index = strategies.findIndex((s) => s.id === result.id);
+    const next = strategies[(index + 1) % strategies.length];
+    setLeaving(true);
+    window.setTimeout(() => {
+      setShownId(next.id);
+      setLeaving(false);
+    }, SWAP_DELAY);
+  };
+
+  const restart = () => {
+    setAnswers([]);
+    setSelected(null);
+    setShownId(null);
+    setLeaving(false);
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <section ref={sectionRef} className={`${styles.quiz} ${isDone ? styles.isResult : ""}`}>
+      {result ? (
+        <>
+          <div className={`${styles.blob} ${styles.blobBlue}`} aria-hidden="true" />
+          <div className={`${styles.blob} ${styles.blobPink}`} aria-hidden="true" />
+
+          <div
+            key={result.id}
+            className={`${styles.container} ${leaving ? styles.leaving : styles.fade}`}
+          >
+            <div className={styles.resultHead}>
+              <p className={styles.eyebrow}>Вам&nbsp;подходит</p>
+              <h2 className={styles.resultTitle}>{result.title}</h2>
+              <p className={styles.resultLead}>{result.result.lead}</p>
+            </div>
+
+            <div
+              className={styles.resultImage}
+              aria-hidden="true"
+              style={
+                {
+                  "--art-size": result.result.art.size,
+                  "--art-top": result.result.art.top,
+                  "--art-right": result.result.art.right,
+                  "--art-mobile": result.result.art.mobile,
+                } as React.CSSProperties
+              }
+            >
+              <img src={result.image} alt="" className={styles.resultImageImg} />
+            </div>
+
+            <div className={styles.details}>
+              <div className={styles.detailsBlock}>
+                <p className={styles.risk}>
+                  Уровень&nbsp;риска:{" "}
+                  {result.result.risk.level}
+                  <br />
+                  Инвестпрофиль: {result.result.risk.profile}
+                </p>
+              </div>
+              <div className={styles.detailsBlock}>
+                <h3 className={styles.detailsTitle}>Почему мы&nbsp;это рекомендуем:</h3>
+                <p className={styles.detailsText}>{result.result.why}</p>
+              </div>
+              <div className={styles.detailsBlock}>
+                <h3 className={styles.detailsTitle}>Что&nbsp;внутри:</h3>
+                <ul className={styles.detailsText}>
+                  {result.result.inside.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className={styles.actions}>
+              <a href={CONNECT_URL} className={styles.button} target="_blank" rel="noopener noreferrer">
+                Подключить стратегию
+              </a>
+              <button type="button" className={styles.secondary} onClick={restart}>
+                Пройти ещё раз
+              </button>
+              <button type="button" className={styles.next} onClick={showNext}>
+                Следующая стратегия
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={`${styles.blob} ${styles.blobQuiz}`} aria-hidden="true" />
+
+          <div className={styles.container}>
+            <p className={styles.eyebrow}>Найдите свой подход</p>
+            <h2 className={styles.title}>
+              <span>Какая стратегия</span>
+              <span>вам&nbsp;ближе?</span>
+            </h2>
+            <p className={styles.subtitle}>Пять вопросов об&nbsp;опыте, целях и&nbsp;отношении к&nbsp;риску</p>
+
+            <div className={styles.grid}>
+              <div className={styles.side}>
+                <div
+                  className={styles.progress}
+                  role="progressbar"
+                  aria-valuemin={0}
+                  aria-valuemax={quiz.length}
+                  aria-valuenow={step + 1}
+                >
+                  {quiz.map((_, i) => (
+                    <span key={i} className={`${styles.bar} ${i <= step ? styles.barActive : ""}`} />
+                  ))}
+                </div>
+
+                <div key={step} className={styles.fade}>
+                  <p className={styles.counter}>
+                    Вопрос {step + 1} / {quiz.length}
+                  </p>
+                  <h3 className={styles.question}>{current.question}</h3>
+                </div>
+              </div>
+
+              <div key={step} className={`${styles.options} ${styles.fade}`} role="radiogroup">
+                {current.options.map((option, i) => (
+                  <button
+                    key={option.title}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected === i}
+                    className={`${styles.option} ${selected === i ? styles.optionActive : ""}`}
+                    onClick={() => choose(i)}
+                  >
+                    <span className={styles.radio} aria-hidden="true" />
+                    <span className={styles.optionBody}>
+                      <span className={styles.optionTitle}>{option.title}</span>
+                      <span className={styles.optionText}>{option.text}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </section>
+  );
+}

@@ -1,0 +1,320 @@
+@use "../../styles/variables" as *;
+@use "../../styles/functions" as *;
+@use "../../styles/mixins" as *;
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100svh + #{dvw(105)});
+  padding-top: dvw(72);
+  padding-bottom: calc(#{dvw(105)} + 2.8vw);
+  background: $color-page-bg;
+  color: $color-white;
+  text-align: center;
+
+  @include mobile {
+    min-height: calc(100svh + 46px);
+    padding-top: 64px;
+    padding-bottom: 86px;
+  }
+}
+
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    135deg,
+    $color-brand-dark 0%,
+    $color-brand 55%,
+    $color-brand-light 100%
+  );
+
+  > * {
+    position: absolute;
+    pointer-events: none;
+  }
+}
+
+.video {
+  inset: -10.33% -10.49% -12.35%;
+  opacity: 0.82;
+  filter: blur(43px);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(closest-side, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+  }
+
+  @include mobile {
+    inset: -4.6% -46.3% 33.3% -44.2%;
+    filter: blur(20px);
+  }
+}
+
+.videoMedia {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tint {
+  inset: 0;
+  background:
+    radial-gradient(58% 58% at 20% 25%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(48% 48% at 76% 26%, rgba(0, 170, 255, 0.24), rgba(0, 170, 255, 0) 72%),
+    radial-gradient(58% 58% at 52% 78%, rgba(0, 51, 204, 0.38), rgba(0, 51, 204, 0) 74%),
+    linear-gradient(
+      135deg,
+      rgba(0, 51, 204, 0.76) 0%,
+      rgba(0, 71, 222, 0.63) 26%,
+      rgba(0, 102, 249, 0.5) 52%,
+      rgba(0, 130, 251, 0.42) 76%,
+      rgba(0, 170, 255, 0.34) 100%
+    );
+}
+
+.lights {
+  inset: -12.25% -15.1% -17.25% -12.4%;
+  opacity: 0.9;
+  background:
+    radial-gradient(40% 30% at 30% 30%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(48% 34% at 72% 64%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 72%);
+
+  @include mobile {
+    inset: -5.9% -20.9%;
+  }
+}
+
+.shade {
+  inset: -10.3% 0 -1.8%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 24%),
+    linear-gradient(180deg, rgba(0, 18, 70, 0.1) 0%, rgba(0, 18, 70, 0.22) 100%);
+
+  @include mobile {
+    inset: 0;
+  }
+}
+
+.blob {
+  will-change: transform;
+  left: 0;
+  border-radius: 50%;
+  background: $gradient-brand;
+}
+
+.blobTop {
+  top: 0;
+  width: 41%;
+  aspect-ratio: 590 / 490;
+  --blob-opacity: 0.28;
+
+  opacity: var(--blob-opacity);
+  filter: blur(75px);
+  animation: blob-drift 9s ease-in-out infinite;
+
+  @include mobile {
+    width: 89%;
+    filter: blur(49px);
+  }
+}
+
+.blobBottom {
+  top: 52.5%;
+  width: 74.7%;
+  aspect-ratio: 1076 / 889;
+  --blob-opacity: 0.56;
+
+  opacity: var(--blob-opacity);
+  filter: blur(95px);
+  animation: blob-drift 11s ease-in-out infinite reverse;
+
+  @include mobile {
+    top: 41.8%;
+    width: 137.7%;
+    filter: blur(52px);
+  }
+}
+
+.fade {
+  inset: 52.5% 0 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.1) 45%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+
+  @include mobile {
+    inset: 63.4% 0 -2.6%;
+  }
+}
+
+
+.logo {
+  position: absolute;
+  top: dvw(32);
+  left: 50%;
+  z-index: 2;
+  width: dvw(403);
+  height: auto;
+  transform: translateX(-50%);
+
+  @include mobile {
+    top: 36px;
+    width: 282px;
+  }
+}
+
+.stage {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 0;
+}
+
+.crystalZone {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.crystal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  height: min(128%, 44.4vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+
+  @media (min-width: #{$bp-mobile + 1}) and (max-aspect-ratio: 1 / 1) {
+    height: min(128%, 82vw);
+  }
+
+  @include mobile {
+    height: min(128%, 93vw, 400px);
+  }
+}
+
+.glow {
+  position: absolute;
+  inset: -6%;
+  background: radial-gradient(
+    45.5% 45.5% at 50% 50%,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0) 78%
+  );
+  animation: glow-pulse 4.5s ease-in-out infinite;
+}
+
+.crystalCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: dvw(14);
+  width: 100%;
+  padding: 0 1.4vw;
+
+  @include mobile {
+    gap: 9px;
+    padding: 0 18px;
+  }
+}
+
+.title {
+  font-size: clamp(28px, 4.03vw, 58px);
+  font-weight: 400;
+  line-height: 1.172;
+  white-space: nowrap;
+
+  @include mobile {
+    white-space: normal;
+    font-size: clamp(28px, calc((100vw - 36px) * 0.092), 36px);
+    line-height: 1.11;
+  }
+}
+
+.titleBreak {
+  @include mobile {
+    display: none;
+  }
+}
+
+.subtitle {
+  color: $color-blue-light;
+  font-size: clamp(24px, 2.64vw, 38px);
+  font-weight: 400;
+  line-height: 1.35;
+
+  @include mobile {
+    max-width: 391px;
+    font-size: 24px;
+    line-height: 32.4px;
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: var(--blob-opacity);
+  }
+
+  25% {
+    transform: translate(28%, -12%) scale(1.3);
+    opacity: calc(var(--blob-opacity) * 1.4);
+  }
+
+  50% {
+    transform: translate(45%, 10%) scale(0.85);
+    opacity: var(--blob-opacity);
+  }
+
+  75% {
+    transform: translate(12%, 18%) scale(1.2);
+    opacity: calc(var(--blob-opacity) * 1.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob,
+  .glow {
+    animation: none;
+  }
+}
