@@ -210,7 +210,7 @@
     align-items: flex-start;
     min-height: 0;
     margin-top: 40px;
-    padding: 30px 20px 0;
+    padding: 4px 26px 30px;
   }
 }
 
@@ -224,8 +224,7 @@
   max-width: dvw(801);
 
   @include mobile {
-    gap: 24px;
-    max-width: none;
+    display: contents;
   }
 }
 
@@ -234,7 +233,10 @@
   line-height: 0.95;
 
   @include mobile {
-    line-height: 1.1;
+    order: 1;
+    margin-top: -10px;
+    font-size: 26px;
+    line-height: 24.7px;
   }
 }
 
@@ -256,8 +258,10 @@
   }
 
   @include mobile {
+    order: 2;
     width: 100%;
     min-height: 54px;
+    margin-top: 38px;
     padding: 13px 20px;
     border-radius: 14px;
   }
@@ -278,9 +282,10 @@
   }
 
   @include mobile {
-    align-self: flex-end;
-    width: 240px;
-    margin: 0 -10px 0 0;
+    order: 0;
+    align-self: flex-start;
+    width: 219px;
+    margin: 0 0 0 -6px;
   }
 }
 
