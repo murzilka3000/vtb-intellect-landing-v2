@@ -7,14 +7,14 @@
   z-index: 1;
   overflow: hidden;
   margin-top: calc(#{dvw(105)} * -1);
-  padding: dvw(53) $gutter dvw(49);
+  padding: dvw(53) $gutter dvw(80);
   border-radius: $radius-section;
   background: $color-white;
   color: $color-text;
 
   @include mobile {
     margin-top: -46px;
-    padding: 55px 20px 37px;
+    padding: 55px 20px 40px;
   }
 }
 
@@ -185,4 +185,127 @@
   color: $color-text-secondary;
   font-size: fluid(16, 20);
   line-height: 1.35;
+}
+
+.article {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: dvw(346);
+  margin-top: dvw(77);
+  padding: dvw(46) dvw(50);
+  overflow: hidden;
+  border-radius: 26px;
+  background: linear-gradient(
+    100deg,
+    rgba(0, 102, 249, 0.8) 0%,
+    #00aaff 58%,
+    $color-brand-dark 100%
+  );
+  color: $color-white;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 0;
+    margin-top: 40px;
+    padding: 30px 20px 0;
+  }
+}
+
+.articleBody {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: dvw(30);
+  max-width: dvw(801);
+
+  @include mobile {
+    gap: 24px;
+    max-width: none;
+  }
+}
+
+.articleTitle {
+  font-size: fluid(26, 46);
+  line-height: 0.95;
+
+  @include mobile {
+    line-height: 1.1;
+  }
+}
+
+.articleButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: dvw(66);
+  padding: dvw(14) dvw(66);
+  border-radius: 18px;
+  background: $color-white;
+  color: $color-brand-dark;
+  font-size: fluid(20, 24);
+  line-height: 1.35;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #eaf2ff;
+  }
+
+  @include mobile {
+    width: 100%;
+    min-height: 54px;
+    padding: 13px 20px;
+    border-radius: 14px;
+  }
+}
+
+.articleArt {
+  position: relative;
+  flex-shrink: 0;
+  width: dvw(294);
+  aspect-ratio: 1;
+  margin-right: dvw(-6);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -8%;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+  }
+
+  @include mobile {
+    align-self: flex-end;
+    width: 240px;
+    margin: 0 -10px 0 0;
+  }
+}
+
+.articleImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: article-float 5s ease-in-out infinite;
+}
+
+@keyframes article-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-4%) rotate(1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .articleImg {
+    animation: none;
+  }
 }

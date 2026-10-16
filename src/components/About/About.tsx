@@ -1,3 +1,4 @@
+import { ARTICLE_URL } from "@/data/strategies";
 import styles from "./About.module.scss";
 
 const steps = [
@@ -61,6 +62,27 @@ export default function About() {
             </li>
           ))}
         </ol>
+
+        <div className={styles.article}>
+          <div className={styles.articleBody}>
+            <p className={styles.articleTitle}>
+              Разбираем, как сервис «Интеллект»
+              <br />
+              от&nbsp;«ВТБ Мои Инвестиции» помогает инвесторам управлять портфелем
+            </p>
+            <a
+              href={ARTICLE_URL}
+              className={styles.articleButton}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Читать статью
+            </a>
+          </div>
+          <div className={styles.articleArt} aria-hidden="true">
+            <img src="/images/article/banner.png" alt="" className={styles.articleImg} />
+          </div>
+        </div>
       </div>
     </section>
   );
