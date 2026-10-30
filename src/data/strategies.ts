@@ -19,6 +19,7 @@ export type Strategy = {
 
 export const CONNECT_URL = "https://www.vtb.ru/personal/investicii/intellect/#how";
 export const ARTICLE_URL = "https://frankmedia.ru/310561?utm_content=landing";
+export const ARTICLE_AI_URL = "https://frankmedia.ru/313139?utm_content=landing";
 export const INTELLECT_URL = "https://www.vtb.ru/personal/investicii/intellect/";
 
 export const strategies: Strategy[] = [

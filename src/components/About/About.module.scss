@@ -298,6 +298,72 @@
   animation: article-float 5s ease-in-out infinite;
 }
 
+.articleAi {
+  margin-top: dvw(24);
+  background: linear-gradient(
+    128deg,
+    #8378e8 6%,
+    #e6acec 62%,
+    #fee3cc 94.6%
+  );
+
+  .articleBody {
+    max-width: dvw(850);
+  }
+
+  .articleTitle {
+    font-size: fluid(26, 42);
+  }
+
+  .articleButton {
+    min-height: dvw(66);
+    padding: dvw(14) dvw(66);
+    color: #8378e8;
+
+    &:hover {
+      background: #f4f1ff;
+    }
+  }
+
+  .articleArt::before {
+    opacity: 0.6;
+  }
+
+  @include mobile {
+    margin-top: 16px;
+    padding: 4px 26px 30px;
+    background: linear-gradient(
+      132deg,
+      #8378e8 9.4%,
+      #e6acec 65.8%,
+      #fee3cc 106.7%
+    );
+
+    .articleArt {
+      width: 185px;
+      margin: 8px 0 0 0;
+    }
+
+    .articleTitle {
+      margin-top: -2px;
+      font-size: 26px;
+      line-height: 24.7px;
+    }
+
+    .articleButton {
+      margin-top: 38px;
+      min-height: 54px;
+      padding: 13px 20px;
+    }
+  }
+}
+
+.articleAiBreak {
+  @include mobile {
+    display: none;
+  }
+}
+
 @keyframes article-float {
   0%,
   100% {
