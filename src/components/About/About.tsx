@@ -1,4 +1,4 @@
-import { ARTICLE_AI_URL, ARTICLE_URL } from "@/data/strategies";
+import ArticleCards from "./ArticleCards";
 import styles from "./About.module.scss";
 
 const steps = [
@@ -63,49 +63,7 @@ export default function About() {
           ))}
         </ol>
 
-        <div className={styles.article}>
-          <div className={styles.articleBody}>
-            <p className={styles.articleTitle}>
-              Разбираем, как сервис «Интеллект»
-              <br />
-              от&nbsp;«ВТБ Мои Инвестиции» помогает инвесторам управлять портфелем
-            </p>
-            <a
-              href={ARTICLE_URL}
-              className={styles.articleButton}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Читать статью
-            </a>
-          </div>
-          <div className={styles.articleArt} aria-hidden="true">
-            <img src="/images/article/banner.png" alt="" className={styles.articleImg} />
-          </div>
-        </div>
-
-        <div className={`${styles.article} ${styles.articleAi}`}>
-          <div className={styles.articleBody}>
-            <p className={styles.articleTitle}>
-              От&nbsp;первых вложений до&nbsp;соревнований с&nbsp;ИИ&nbsp;— как подобрать стратегию{" "}
-              <br className={styles.articleAiBreak} />
-              под себя с&nbsp;сервисом «Интеллект»{" "}
-              <br className={styles.articleAiBreak} />
-              от&nbsp;ВТБ Мои Инвестиции
-            </p>
-            <a
-              href={ARTICLE_AI_URL}
-              className={styles.articleButton}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Читать статью
-            </a>
-          </div>
-          <div className={styles.articleArt} aria-hidden="true">
-            <img src="/images/article/banner-ai.png" alt="" className={styles.articleImg} />
-          </div>
-        </div>
+        <ArticleCards />
       </div>
     </section>
   );
