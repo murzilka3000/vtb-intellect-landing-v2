@@ -248,7 +248,7 @@
   padding: dvw(14) dvw(66);
   border-radius: 18px;
   background: $color-white;
-  color: $color-brand-dark;
+  color: $color-brand;
   font-size: fluid(20, 24);
   line-height: 1.35;
   transition: background-color 0.2s ease;
@@ -323,10 +323,6 @@
     &:hover {
       background: #f4f1ff;
     }
-  }
-
-  .articleArt::before {
-    opacity: 0.6;
   }
 
   @include mobile {
